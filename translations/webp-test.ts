@@ -15,7 +15,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>load webP file</source>
+        <source>load webP image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load webP thumbnail</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

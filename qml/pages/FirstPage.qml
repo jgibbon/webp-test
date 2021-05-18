@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Nemo.Thumbnailer 1.0
 
 Page {
     id: page
@@ -19,23 +20,62 @@ Page {
         Column {
             id: column
 
-            width: page.width
+            width: page.width - x
+            x: Theme.horizontalPageMargin
             spacing: Theme.paddingLarge
             PageHeader {
                 title: qsTr("WebP-Test")
             }
-            Button {
-                text: qsTr("load webP file")
-                onClicked: {
-                    testImage.source = "../assets/test.webp"
+            ButtonLayout {
+                Button {
+                    text: qsTr("load webP image")
+                    onClicked: {
+                        testImage.source = "../assets/test.webp"
+                    }
+                }
+                Button {
+                    text: qsTr("load webP thumbnail")
+                    onClicked: {
+                        testThumbnail.source = "../assets/test.webp"
+                    }
                 }
             }
 
             Image {
                 id: testImage
+                width: parent.width / 2
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 x: (parent.width - width ) / 2
                 onStatusChanged: {
-                    console.log("image status changed", status)
+                    console.log("image staus changed", status);
+                    var states = ["Null", "Ready", "Loading", "Error"];
+                    for(var s in states) {
+                        if(status === Image[states[s]]) {
+                            console.log("Status: ", states[s]);
+                            break;
+                        }
+                    }
+                }
+            }
+            Thumbnail {
+                id: testThumbnail
+                x: (parent.width - width ) / 2
+                width: parent.width / 4
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
+                mimeType: "image/webp"
+                onStatusChanged: {
+                    console.log("thumbnail status changed", status);
+                    var states = ["Null", "Ready", "Loading", "Error"];
+                    for(var s in states) {
+                        if(status === Thumbnail[states[s]]) {
+                            console.log("Status: ", states[s]);
+                            break;
+                        }
+                    }
                 }
             }
         }
